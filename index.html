@@ -1,0 +1,502 @@
+<html>
+
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="_bundle.js"></script>
+</head>
+
+<body>
+    <!-- Full screen modal -->
+    <div class="modal fade" id="visualizationModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title h4" id="exampleModalFullscreenLabel">Visualization</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeDialog()"></button>
+          </div>
+          <div class="modal-body">
+            <canvas id="visualizationCanvas"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="visualize(null, 1)">Part 1</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="visualize(null, 2)">Part 2</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeDialog()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <p class="h1">Advent Of Code 2020 <button type="button" class="btn btn-primary" onclick="executeAll(this)">Run All</button></p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card" day="1" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 1: Report Repair</h5>
+                            <p class="card-text">
+                                After saving Christmas five years in a row, you've decided to take a vacation at a nice
+                                resort on a tropical island. Surely, Christmas will go on without you.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(1, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(1, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="4" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 4: Passport Processing</h5>
+                            <p class="card-text">
+                                You arrive at the airport only to realize that you grabbed your North Pole Credentials 
+                                instead of your passport. While these documents are extremely similar, North Pole 
+                                Credentials aren't issued by a country and therefore aren't actually valid 
+                                documentation for travel in most of the world.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(4, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(4, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="7" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 7: Handy Haversacks</h5>
+                            <p class="card-text">
+                                You land at the regional airport in time for your next flight. In fact, it looks like you'll 
+                                even have time to grab some food: all flights are currently delayed due to issues in 
+                                luggage processing.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(7, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(7, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="10" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 10: Adapter Array</h5>
+                            <p class="card-text">
+                                Patched into the aircraft's data port, you discover weather forecasts of a massive 
+                                tropical storm. Before you can figure out whether it will impact your vacation plans, 
+                                however, your device suddenly turns off!
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(10, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(10, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="13" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 13: Shuttle Search</h5>
+                            <p class="card-text">
+                                Your ferry can make it safely to a nearby port, but it won't get much further. 
+                                When you call to book another ship, you discover that no ships embark from that 
+                                port to your vacation island. You'll need to get from the port to the nearest airport.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(13, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(13, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="16" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 16: Ticket Translation</h5>
+                            <p class="card-text">
+                                As you're walking to yet another connecting flight, you realize that one of the legs of 
+                                your re-routed trip coming up is on a high-speed train. However, the train ticket you 
+                                were given is in a language you don't understand. You should probably figure out what it 
+                                says before you get to the train station after the next flight.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(16, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(16, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="19" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 19: Monster Messages</h5>
+                            <p class="card-text">
+                                You land in an airport surrounded by dense forest. As you walk to your high-speed 
+                                train, the Elves at the Mythical Information Bureau contact you again. They think 
+                                their satellite has collected an image of a sea monster! Unfortunately, the 
+                                connection to the satellite is having problems, and many of the messages sent 
+                                back from the satellite have been corrupted.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(19, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(19, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="22" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 22: Crab Combat</h5>
+                            <p class="card-text">
+                                It only takes a few hours of sailing the ocean on a raft for boredom to sink in. 
+                                Fortunately, you brought a small deck of space cards! You'd like to play a 
+                                game of Combat, and there's even an opponent available: a small crab that climbed 
+                                aboard your raft before you left.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(22, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(22, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="card" day="2" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 2: Password Philosophy</h5>
+                            <p class="card-text">
+                                Your flight departs in a few days from the coastal airport; the easiest way down to the
+                                coast from here is via toboggan.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(2, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(2, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="5" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 5: Binary Boarding</h5>
+                            <p class="card-text">
+                                You board your plane only to discover a new problem: you dropped your boarding pass! 
+                                You aren't sure which seat is yours, and all of the flight attendants are busy with 
+                                the flood of people that suddenly made it through passport control.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(5, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(5, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="8" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 8: Handheld Halting</h5>
+                            <p class="card-text">
+                                Your flight to the major airline hub reaches cruising altitude without incident. 
+                                While you consider checking the in-flight menu for one of those drinks that come 
+                                with a little umbrella, you are interrupted by the kid sitting next to you.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(8, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(8, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="11" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 11: Seating System</h5>
+                            <p class="card-text">
+                                Your plane lands with plenty of time to spare. The final leg of your journey 
+                                is a ferry that goes directly to the tropical island where you can finally 
+                                start your vacation. As you reach the waiting area to board the ferry, you 
+                                realize you're so early, nobody else has even arrived yet!
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(11, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(11, 2)">Part 2</button>
+                                <button type="button" class="btn btn-primary" onclick="visualize(11)">Visualize</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="14" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 14: Docking Data</h5>
+                            <p class="card-text">
+                                As your ferry approaches the sea port, the captain asks for your help again. 
+                                The computer system that runs this port isn't compatible with the docking program 
+                                on the ferry, so the docking parameters aren't being correctly initialized in the 
+                                docking program's memory.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(14, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(14, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="17" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 17: Conway Cubes</h5>
+                            <p class="card-text">
+                                As your flight slowly drifts through the sky, the Elves at the Mythical Information 
+                                Bureau at the North Pole contact you. They'd like some help debugging a 
+                                malfunctioning experimental energy source aboard one of their super-secret imaging 
+                                satellites.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(17, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(17, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="20" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 20: Jurassic Jigsaw</h5>
+                            <p class="card-text">
+                                The high-speed train leaves the forest and quickly carries you south. You can even 
+                                see a desert in the distance! Since you have some spare time, you might as well see 
+                                if there was anything interesting in the image the Mythical Information Bureau 
+                                satellite captured.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(20, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(20, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="23" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 23: Crab Cups</h5>
+                            <p class="card-text">
+                                The small crab challenges you to a game! The crab is going to mix up some cups,
+                                and you have to predict where they'll end up.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(23, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(23, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="card" day="3" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 3: Toboggan Trajectory</h5>
+                            <p class="card-text">
+                                With the toboggan login problems resolved, you set off toward the airport. 
+                                While travel by toboggan might be easy, it's certainly not safe: there's very 
+                                minimal steering and the area is covered in trees. You'll need to see which 
+                                angles will take you near the fewest trees.                            
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(3, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(3, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="6" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 6: Custom Customs</h5>
+                            <p class="card-text">
+                                As your flight approaches the regional airport where you'll switch to a much 
+                                larger plane, customs declaration forms are distributed to the passengers.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(6, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(6, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="9" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 9: Encoding Error</h5>
+                            <p class="card-text">
+                                With your neighbor happily enjoying their video game, you turn your attention 
+                                to an open data port on the little screen in the seat in front of you.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(9, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(9, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="12" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 12: Rain Risk</h5>
+                            <p class="card-text">
+                                our ferry made decent progress toward the island, but the storm came in faster than 
+                                anyone expected. The ferry needs to take evasive actions!
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(12, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(12, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="15" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 15: Rambunctious Recitation</h5>
+                            <p class="card-text">
+                                You catch the airport shuttle and try to book a new flight to your vacation island. 
+                                Due to the storm, all direct flights have been cancelled, but a route is available 
+                                to get around the storm. You take it.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(15, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(15, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="18" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 18: Operation Order</h5>
+                            <p class="card-text">
+                                As you look out the window and notice a heavily-forested continent slowly appear 
+                                over the horizon, you are interrupted by the child sitting next to you. 
+                                They're curious if you could help them with their math homework.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(18, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(18, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="21" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 21: Allergen Assessment</h5>
+                            <p class="card-text">
+                                You reach the train's last stop and the closest you can get to your vacation 
+                                island without getting wet. There aren't even any boats here, but nothing can 
+                                stop you now: you build a raft. You just need a few days' worth of food for your 
+                                journey.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(21, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(21, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="24" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 24: Lobby Layout</h5>
+                            <p class="card-text">
+                                Your raft makes it to the tropical island; it turns out that the small crab 
+                                was an excellent navigator. You make your way to the resort.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(24, 1)">Part 1</button>
+                                <button type="button" class="btn btn-primary" onclick="execute(24, 2)">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+
+                    <div class="card" day="25" style="width: 18rem; margin: 10px">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 25: Combo Breaker</h5>
+                            <p class="card-text">
+                                You finally reach the check-in desk. Unfortunately, their registration systems are 
+                                currently offline, and they cannot check you in. Noticing the look on your face, 
+                                they quickly add that tech support is already on the way! They even created all 
+                                the room keys this morning; you can take yours now and give them your room deposit 
+                                once the registration system comes back online.
+                            </p>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" onclick="execute(25, 1)">Part 1</button>
+                                <button disabled type="button" class="btn btn-secondary">Part 2</button>
+                            </div>
+
+                            <div class="part1 d-none"><br/>Part 1: <small>?</small></div>
+                            <div class="part2 d-none">Part 2: <small>?</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
