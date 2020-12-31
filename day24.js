@@ -1,7 +1,7 @@
 import dataContent from './Data/day24.data';
 import readFile from './advent_tools/readfile';
 
-export default function dayBody(partToExecute)
+export default async function dayBody(partToExecute, renderer)
 {
     const DAY = 24;
 
@@ -63,6 +63,29 @@ export default function dayBody(partToExecute)
         }
 
         return entries;
+    }
+
+    async function doRender(tiles)
+    {
+        if (renderer) { 
+          let minX = Number.MAX_SAFE_INTEGER, 
+              maxX = Number.MIN_SAFE_INTEGER, 
+              minY = Number.MAX_SAFE_INTEGER, 
+              maxY = Number.MIN_SAFE_INTEGER;
+
+          tiles.forEach(({X, Y}) => {
+            minX = Math.min(X, minX);
+            maxX = Math.max(X, maxX);
+            minY = Math.min(Y, minY);
+            maxY = Math.max(Y, maxY);
+          });
+
+          await renderer.prepare(minX, minY, maxX, maxY);
+
+          tiles.forEach(({X, Y}) => renderer.plot(X, Y, 'white'));
+
+          await renderer.present();
+        }
     }
 
     function process(tiles)
@@ -134,18 +157,20 @@ export default function dayBody(partToExecute)
         return tiles;
     }
 
-    function part1()
+    async function part1()
     {
         const tiles = initialize();
+
+        await doRender(tiles);
 
         return { tiles, count: tiles.size };
     }
 
-    function part2(tiles)
+    async function part2(tiles)
     {
         for(let day = 0; day < 100; day++) {
-            
             tiles = process(tiles);
+            await doRender(tiles);
         }
 
         return tiles.size;
@@ -155,7 +180,7 @@ export default function dayBody(partToExecute)
 
     console.time(`${DAY}-part-1`);
     
-    const { tiles, count } = part1();
+    const { tiles, count } = await part1();
 
     console.log(`Part 1: ${ count }`);
     console.timeLog(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
@@ -166,7 +191,7 @@ export default function dayBody(partToExecute)
     if (!partToExecute || partToExecute === 2)
     {
         console.time(`${DAY}-part-2`);
-        const p2 = part2(tiles);
+        const p2 = await part2(tiles);
         console.log(`Part 2: ${p2}`);
         console.timeLog(`${DAY}-part-2`, `to execute part 2 of day ${DAY}`);
         if (partToExecute === 2)

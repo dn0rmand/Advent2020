@@ -123,6 +123,61 @@ window.openDialog = async function()
 
 let lastDay = -1;
 
+class Renderer 
+{
+  constructor(canvas, width, height)
+  {
+      this.ox = 0;
+      this.oy = 0;
+      this.xx = 0;
+      this.yy = 0;
+      this.sizeX = 0;
+      this.sizeY = 0;
+      this.width = width;
+      this.height= height;
+
+      canvas.width = width;
+      canvas.height= height;
+  
+      this.context = canvas.getContext('2d');
+
+      this.context.fillStyle = 'black';
+      this.context.fillRect(0, 0, this.width, this.height);
+  }
+
+  prepare(minX, minY, maxX, maxY, color)
+  {
+      const width = maxX - minX + 1;
+      const height= maxY - minY + 1;
+
+      this.sizeX = Math.floor(this.width / width);
+      this.sizeY = Math.floor(this.height / height);
+
+      this.sizeX = this.sizeY = Math.max(1, Math.min(this.sizeX, this.sizeY)); // Squares
+
+      this.ox = (Math.floor(this.width - width * this.sizeX) / 2);
+      this.oy = (Math.floor(this.height - height * this.sizeY) / 2);
+      this.xx = minX < 0 ? -minX : 0;
+      this.yy = minY < 0 ? -minY : 0;
+      this.context.fillStyle = color || 'black';
+      this.context.fillRect(0, 0, this.width, this.height);
+  }
+
+  plot(x, y, color) 
+  {
+      x += this.xx;
+      y += this.yy;
+
+      this.context.fillStyle = color || 'black';
+      this.context.fillRect(this.ox + x*this.sizeX, this.oy + y*this.sizeY, this.sizeX, this.sizeY);
+  }
+
+  async present()
+  {
+      await wait(100);
+  }
+}
+
 window.visualize = async function(day, part)
 {
     day = day || lastDay;
@@ -141,42 +196,5 @@ window.visualize = async function(day, part)
     canvas.parentElement.style.padding = 0;
     const rect = canvas.parentElement.getBoundingClientRect();
 
-    canvas.width = rect.width;
-    canvas.height= rect.height;
-
-    const context = canvas.getContext('2d');
-
-    context.fillStyle = 'black';
-    context.fillRect(0, 0, rect.width, rect.height);
-
-    let doIt = false;
-
-    await day(part, async (width, height, getState) => {
-      doIt = ! doIt;
-      if (!doIt) return;
-
-      // context.fillStyle = 'black';
-      // context.fillRect(0, 0, rect.width, rect.height);
-  
-      let sizeX = Math.floor(rect.width / width);
-      let sizeY = Math.floor(rect.height / height);
-
-      sizeX = sizeY = Math.min(sizeX, sizeY); // Squares
-
-      const ox = Math.floor(rect.width - width * sizeX) / 2;
-      const oy = Math.floor(rect.height - height * sizeY) / 2;
-      
-      for(let x = 0; x < width; x++)
-      {
-        for(let y = 0; y < height; y++)
-        {
-          const color = getState(x, y);
-          if (color && color !== 'back') {
-            context.fillStyle = color;
-            context.fillRect(ox + x*sizeX, oy + y*sizeY, sizeX, sizeY);
-          }
-        }
-      }
-      await wait(100);
-    });
+    await day(part, new Renderer(canvas, rect.width, rect.height));
 }

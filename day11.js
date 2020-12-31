@@ -1,7 +1,7 @@
 import dataContent from './Data/day11.data';
 import readFile from './advent_tools/readfile';
 
-export default async function dayBody(partToExecute, render)
+export default async function dayBody(partToExecute, renderer)
 {
     const DAY = 11;
 
@@ -19,18 +19,19 @@ export default async function dayBody(partToExecute, render)
 
     async function doRender(width, height, state)
     {
-        if (render) { 
-          await render(width, height, (x, y) => {
-            if (y < 0 || y >= height) {
-              return 0;
-            }
+        if (renderer) { 
+          await renderer.prepare(0, 0, width, height);
 
+          for(let x = 0; x < width; x++)
+          for(let y = 0; y < height; y++)
+          {
             switch(state[y][x]) {
-              case 'L': return 'green';
-              case '#': return 'red';
-              default:  return 0;
+              case 'L': await renderer.plot(x, y, 'green'); break;
+              case '#': await renderer.plot(x, y, 'red'); break;
+              default:  await renderer.plot(x, y); break;
             }
-          });
+          }
+          await renderer.present();
         }
     }
 
@@ -65,10 +66,13 @@ export default async function dayBody(partToExecute, render)
 
         let modified = true;
         let occupied = 0;
-
+        let doIt = false;
         while(modified)
         {
-            await doRender(width, height, state);
+            doIt = ! doIt;
+            if (doIt)
+              await doRender(width, height, state);
+
             modified = false;
             occupied = 0;
 
@@ -160,10 +164,13 @@ export default async function dayBody(partToExecute, render)
 
         let modified = true;
         let occupied = 0;
-
+        let doIt = false;
+        
         while(modified)
         {
-            await doRender(width, height, state);
+            doIt = ! doIt;
+            if (doIt)
+              await doRender(width, height, state);
 
             modified = false;
             occupied = 0;
