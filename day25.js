@@ -38,7 +38,7 @@ export default function dayBody(partToExecute)
         console.time(`${DAY}-part-1`);
         const p1 = part1();
         console.log(`Part 1: ${p1}`);
-        console.timeLog(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
+        console.timeEnd(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
         if (partToExecute === 1)
             return p1;
     }

@@ -129,7 +129,7 @@ export default function dayBody(partToExecute)
         console.time(`${DAY}-part-1`);
         const p1 = part1(player1, player2);
         console.log(`Part 1: ${p1}`);
-        console.timeLog(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
+        console.timeEnd(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
         if (partToExecute === 1)
             return p1;
     }
@@ -139,7 +139,7 @@ export default function dayBody(partToExecute)
         console.time(`${DAY}-part-2`);
         const p2 = part2(player1, player2);
         console.log(`Part 2: ${p2}`);
-        console.timeLog(`${DAY}-part-2`, `to execute part 2 of day ${DAY}`);
+        console.timeEnd(`${DAY}-part-2`, `to execute part 2 of day ${DAY}`);
         if (partToExecute === 2)
             return p2;
     }

@@ -183,7 +183,7 @@ export default async function dayBody(partToExecute, renderer)
     const { tiles, count } = await part1();
 
     console.log(`Part 1: ${ count }`);
-    console.timeLog(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
+    console.timeEnd(`${DAY}-part-1`, `to execute part 1 of day ${DAY}`);
 
     if (partToExecute === 1)
       return count;
@@ -193,7 +193,7 @@ export default async function dayBody(partToExecute, renderer)
         console.time(`${DAY}-part-2`);
         const p2 = await part2(tiles);
         console.log(`Part 2: ${p2}`);
-        console.timeLog(`${DAY}-part-2`, `to execute part 2 of day ${DAY}`);
+        console.timeEnd(`${DAY}-part-2`, `to execute part 2 of day ${DAY}`);
         if (partToExecute === 2)
             return p2;
     }

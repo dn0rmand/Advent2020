@@ -59,6 +59,8 @@ async function wait(ms)
 
 window.execute = async function(day, part) 
 {
+    console.clear(); 
+
     day = advent2020_Days[day-1];
     if (! day) {
         alert(`Day ${day} is not implemented yet`);
@@ -85,16 +87,30 @@ window.execute = async function(day, part)
 
 window.executeAll = async function(except) 
 {
+    console.clear()
+
     except.disabled = true;
     except.innerText = 'Running...'
     await wait(10);
     const buttons = document.getElementsByTagName("button");
     
-    for(const btn of buttons) {
-        if (btn !== except) {
-            btn.click();
-            await wait(100);
-        }
+    const $clear = console.clear;
+    console.clear = () => {}
+    
+    try
+    {
+      window.runningAll = true;
+      for(const btn of buttons) {
+          if (btn !== except && btn.parentElement.className != 'modal-footer') {
+              btn.click();
+              await wait(100);
+          }
+      }
+    }
+    finally
+    {
+      window.runningAll = false;
+      console.clear = $clear;
     }
 
     except.disabled = false;
@@ -180,6 +196,12 @@ class Renderer
 
 window.visualize = async function(day, part)
 {
+    if (window.runningAll == true) {
+      return;
+    }
+    
+    console.clear()
+
     day = day || lastDay;
     lastDay = day;
 
@@ -187,7 +209,7 @@ window.visualize = async function(day, part)
     part = part || 1;
 
     if (! day) {
-      alert(`Day ${day} is not implemented yet`);
+      alert(`Day ${day} visualization is not implemented yet`);
     }
 
     await openDialog();
