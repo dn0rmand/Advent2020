@@ -5,11 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch in Chrome",
       "type": "chrome",
       "request": "launch",
-      "name": "Launch index.html file into Chrome",
       "url": "file://${workspaceFolder}/index.html",
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Launch in Brave",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+      "url": "file://${workspaceFolder}/index.html",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
